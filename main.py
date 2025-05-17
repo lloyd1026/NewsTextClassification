@@ -76,10 +76,12 @@ def bert_classifier(x_train, y_train, x_val, y_val, x_test, y_test, classes):
 
     # 训练配置
     training_args = TrainingArguments(
-        output_dir='./results',          
+        output_dir='./results',
+        save_strategy="steps",
+        save_steps=500,
         num_train_epochs=3,             
-        per_device_train_batch_size=8,   
-        per_device_eval_batch_size=8,    
+        per_device_train_batch_size=16,
+        per_device_eval_batch_size=16,
         warmup_steps=500,               
         weight_decay=0.01,              
         logging_dir='./logs',            
@@ -150,10 +152,10 @@ def main():
     x_test_tfidf = vectorizer.transform(x_test)
 
     # 调用 SVM 分类器
-    # sgd_classifier(x_train_tfidf, y_train, x_val_tfidf, y_val, x_test_tfidf, y_test, classes)
+    sgd_classifier(x_train_tfidf, y_train, x_val_tfidf, y_val, x_test_tfidf, y_test, classes)
 
     # 调用 BERT 分类器
-    bert_classifier(x_train, y_train, x_val, y_val, x_test, y_test, classes)
+    # bert_classifier(x_train, y_train, x_val, y_val, x_test, y_test, classes)
 
 
 if __name__ == '__main__':
